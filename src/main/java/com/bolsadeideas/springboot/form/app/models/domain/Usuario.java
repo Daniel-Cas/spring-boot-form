@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.Date;
+import java.util.List;
 
 public class Usuario {
 
@@ -42,8 +43,21 @@ public class Usuario {
     @DateTimeFormat( pattern = "yyyy-MM-dd")
     private Date fechaNacimiento;
 
-    @Valid
+    @NotNull
     private Pais pais;
+
+    @NotEmpty
+    private List<Role> roles;
+
+    private Boolean habilitar;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
     public Pais getPais() {
         return pais;
@@ -114,5 +128,13 @@ public class Usuario {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Boolean getHabilitar() {
+        return habilitar;
+    }
+
+    public void setHabilitar(Boolean habilitar) {
+        this.habilitar = habilitar;
     }
 }

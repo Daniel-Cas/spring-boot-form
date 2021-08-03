@@ -12,17 +12,38 @@
 
 
 
+    <!-- Habilitar (propiedad) de usuario-->
+    <div>
+        <label for="habilitar"> Habilitar </label>
+        <div>
+            <input  id="habilitar" type="checkbox" th:field="*{habilitar}">
+        </div>
+    </div>
+
+
+
    <!-- Paises Posibles del usuario-->
     <div>
-        <label for="pais.codigo"> País </label>
+        <label for="pais"> País </label>
         <div>
-            <select  id="pais.codigo"  type="text" th:field="*{pais.codigo}">
+            <select  id="pais"  type="text" th:field="*{pais}">
                 <option value=""> -- Seleccionar Pais -- </option>
-                <option th:each="pais: ${listaPaises}" th:text="${pais.nombre}" th:value="${pais.codigo}"></option>
+                <option th:each="pais: ${listaPaises}" th:text="${pais.nombre}" th:value="${pais.id}"></option>
             </select>
         </div>
     </div>
-    <div th:if="${#fields.hasErrors('pais.codigo')}"  th:errors="*{pais.codigo}"> </div>
+    <div th:if="${#fields.hasErrors('pais')}"  th:errors="*{pais}"> </div>
+
+
+    <!-- Roles de usuario-->
+    <div>
+        <label> Roles </label>
+        <div th:each="role: ${listaRoles}">
+            <input type="checkbox" th:field="*{roles}" th:value="${role.id}">
+            <label th:for="${#ids.prev('roles')}" th:text="${role.nombre}"></label>
+        </div>
+    </div>
+    <div th:if="${#fields.hasErrors('roles')}"  th:errors="*{roles}"> </div>
 
 
     <!-- identificador de usuario-->
