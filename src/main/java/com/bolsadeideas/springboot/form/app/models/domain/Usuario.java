@@ -1,8 +1,12 @@
 package com.bolsadeideas.springboot.form.app.models.domain;
 
 import com.bolsadeideas.springboot.form.app.validation.IdentificadorRegex;
+import com.bolsadeideas.springboot.form.app.validation.Requerido;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.util.Date;
 
 public class Usuario {
 
@@ -10,11 +14,11 @@ public class Usuario {
     @IdentificadorRegex
     private String identificador;
 
-
     //@NotEmpty(message = "El nombre no puede ser vacío")
     private String nombre;
 
-    @NotEmpty
+    //@NotEmpty
+    @Requerido
     private String apellido;
 
     @NotBlank
@@ -24,10 +28,46 @@ public class Usuario {
     @NotEmpty
     private String password;
 
-    @NotEmpty
+    @Requerido
     @Email(message = "Formato de Correo incorrecto")
     private String email;
 
+    @Min(5)
+    @Max(5000)
+    @NotNull
+    private Integer cuenta;
+
+    @Past
+    @NotNull
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
+    private Date fechaNacimiento;
+
+    @Valid
+    private Pais pais;
+
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Integer getCuenta() {
+        return cuenta;
+    }
+
+    public void setCuenta(Integer cuenta) {
+        this.cuenta = cuenta;
+    }
 
     public String getIdentificador() {
         return identificador;
@@ -51,8 +91,6 @@ public class Usuario {
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
-
-
 
     public String getUsername() {
         return username;
