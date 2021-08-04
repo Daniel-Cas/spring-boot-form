@@ -80,6 +80,11 @@ public class FormController {
         return roles;
     }
 
+    @ModelAttribute("genero")
+    public List<String> genero(){
+        return Arrays.asList("Hombre","Mujer");
+    }
+
     @ModelAttribute("listaRolesMap")
     public Map<String, String> listaRolesMap(){
 
@@ -122,31 +127,38 @@ public class FormController {
         usuario.setApellido("Castle");
         usuario.setIdentificador("123.456.789-K");
         usuario.setHabilitar(true);
+        usuario.setValorSecreto(" Algun valor secreto ****");
+        usuario.setPais(  new Pais( 6, "CO","Colombia"));
+        usuario.setRoles(Arrays.asList( new Role (2, "Usuario"," ROLE_USER")));
 
 
         model.addAttribute("titulo", "Formulario de usuarios");
-        model.addAttribute("user", usuario);
+        model.addAttribute("usuario", usuario);
 
         return "form";
     }
 
     @PostMapping("/form")
-    public String procesar(@Valid @ModelAttribute("user") Usuario usuario, BindingResult result, Model model, SessionStatus status){
-
-
+    public String procesar(@Valid  Usuario usuario, BindingResult result, Model model){
         //validador.validate( usuario, result);
 
-        model.addAttribute("titulo", "Resultado del form");
-
-
         if( result.hasErrors()){
-
+            model.addAttribute("titulo", "Resultado del form");
             return "form";
         }
 
-        model.addAttribute("user", usuario);
-        status.setComplete();
+        return "redirect:/ver";
+    }
+    
+    @GetMapping("/ver")
+    public String ver(@SessionAttribute(name="usuario", required = false) Usuario usuario, Model model, SessionStatus status){
 
+        if( usuario == null ){
+            return "redirect:/form";
+        }
+
+        model.addAttribute("titulo", "Resultado del form");
+        status.setComplete();
         return "resultado";
     }
 
